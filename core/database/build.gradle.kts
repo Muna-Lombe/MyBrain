@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":bookmarks:domain"))
     implementation(project(":diary:domain"))
     implementation(project(":core:alarm"))
+    implementation(project(":canvas:domain"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

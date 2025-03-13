@@ -1,7 +1,7 @@
 package com.mhss.app.database.dao
 
 import androidx.room.*
-import com.mhss.app.data.local.CanvasEntity
+import com.mhss.app.database.entity.CanvasEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
