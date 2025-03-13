@@ -1,8 +1,7 @@
-package com.mhss.app.presentation.canvas
+package com.mhss.app.presentation
 
 import com.mhss.app.domain.model.CanvasDrawing
 import com.mhss.app.domain.model.DrawPath
-import com.mhss.app.domain.model.Point
 
 data class CanvasState(
     val currentDrawing: CanvasDrawing? = null,

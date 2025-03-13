@@ -1,4 +1,4 @@
-package com.mhss.app.presentation.canvas
+package com.mhss.app.presentation
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -9,7 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.mhss.app.domain.model.Point
 import com.mhss.app.ui.R
 import org.koin.androidx.compose.koinViewModel
-import kotlin.io.encoding.ExperimentalEncodingApi
 
 @Composable
 fun CanvasScreen(

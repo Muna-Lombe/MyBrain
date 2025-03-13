@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.mhss.app.database.converters.DBConverters
 import com.mhss.app.database.dao.*
 import com.mhss.app.database.entity.*
-import com.mhss.app.data.local.CanvasEntity
+import com.mhss.app.database.entity.CanvasEntity
 
 @Database(
     entities = [

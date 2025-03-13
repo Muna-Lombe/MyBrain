@@ -1,4 +1,4 @@
-package com.mhss.app.presentation.canvas
+package com.mhss.app.presentation
 
 import com.mhss.app.domain.model.Point
 

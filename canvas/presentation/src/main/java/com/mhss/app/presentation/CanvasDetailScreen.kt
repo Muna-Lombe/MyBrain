@@ -4,7 +4,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,19 +14,12 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mhss.app.domain.model.DrawPath
 import com.mhss.app.domain.model.Point
 import com.mhss.app.ui.R
-import com.mhss.app.ui.components.common.MyBrainAppBar
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.ui.graphics.toArgb
-
-
-
-
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
