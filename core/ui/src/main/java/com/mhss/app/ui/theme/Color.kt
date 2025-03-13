@@ -19,4 +19,7 @@ val Gray = Color(0xFF7E7979)
 val LightGray = Color(0xFFECECEC)
 val LightPurple = Color(0xFF743AD6)
 val DarkOrange = Color(0xFFFF5900)
+val Indigo = Color(0xFF6610F2)
+
+
 

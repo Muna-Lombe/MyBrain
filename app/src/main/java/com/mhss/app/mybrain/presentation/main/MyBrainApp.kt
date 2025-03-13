@@ -42,6 +42,8 @@ import com.mhss.app.presentation.BookmarkSearchScreen
 import com.mhss.app.presentation.BookmarksScreen
 import com.mhss.app.presentation.CalendarEventDetailsScreen
 import com.mhss.app.presentation.CalendarScreen
+import com.mhss.app.presentation.CanvasScreen
+import com.mhss.app.presentation.CanvasDetailScreen
 import com.mhss.app.presentation.DiaryChartScreen
 import com.mhss.app.presentation.DiaryEntryDetailsScreen
 import com.mhss.app.presentation.DiaryScreen
@@ -321,6 +323,22 @@ fun MyBrainApp(
                         exitTransition = { slideOutTransition() },
                     ) {
                         AssistantScreen()
+                    }
+                    composable<Screen.CanvasScreen>(
+                        enterTransition = { slideInTransition() },
+                        exitTransition = { slideOutTransition() },
+                    ) {
+                        CanvasScreen()
+                    }
+                    composable<Screen.CanvasDetailScreen>(
+                        enterTransition = { slideInTransition() },
+                        exitTransition = { slideOutTransition() },
+                    ) {
+                        val args = it.toRoute<Screen.CanvasDetailScreen>()
+                        CanvasDetailScreen(
+                            navController = navController,
+                            drawingId = args.drawingId
+                        )
                     }
                 }
                 if (!appUnlocked) {
