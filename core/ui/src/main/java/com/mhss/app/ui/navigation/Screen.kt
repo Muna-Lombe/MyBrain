@@ -68,14 +68,17 @@ sealed class Screen {
 
     @Serializable
     data object CalendarScreen : Screen()
+
     @Serializable
     data class CalendarEventDetailsScreen(
         val eventJson: String? = null
     ) : Screen()
+
     @Serializable
     data class NoteFolderDetailsScreen(
         val folderId: Int
     ): Screen()
+
     @Serializable
     data object ImportExportScreen : Screen()
 
@@ -84,4 +87,12 @@ sealed class Screen {
 
     @Serializable
     data object AssistantScreen : Screen()
+
+    @Serializable
+    data object CanvasScreen : Screen()
+
+    @Serializable
+    data class CanvasDetailScreen(
+        val drawingId: String? = null
+    ) : Screen()
 }
