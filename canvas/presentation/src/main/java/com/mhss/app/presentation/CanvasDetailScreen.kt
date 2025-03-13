@@ -15,12 +15,16 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mhss.app.domain.model.DrawPath
+import com.mhss.app.domain.model.Point
+import com.mhss.app.ui.R
 import com.mhss.app.ui.components.common.MyBrainAppBar
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CanvasDetailScreen(
     navController: NavHostController,
@@ -30,6 +34,8 @@ fun CanvasDetailScreen(
     var currentPath by remember { mutableStateOf(Path()) }
     var currentPoints by remember { mutableStateOf(listOf<Offset>()) }
     var paths by remember { mutableStateOf(listOf<DrawPath>()) }
+    var currentColor by remember { mutableStateOf(Color.Black) }
+    var currentStrokeWidth by remember { mutableStateOf(5f) }
 
     LaunchedEffect(drawingId) {
         if (drawingId != null) {
@@ -52,7 +58,10 @@ fun CanvasDetailScreen(
                         viewModel.saveDrawing(paths)
                         navController.navigateUp()
                     }) {
-                        Icon(Icons.Default.Save, contentDescription = "Save")
+                        Icon(
+                            painter = painterResource(id = R.drawable.save_img),
+                            contentDescription = "Save"
+                        )
                     }
                 }
             )
@@ -76,7 +85,11 @@ fun CanvasDetailScreen(
                             currentPath.lineTo(newPoint.x, newPoint.y)
                         },
                         onDragEnd = {
-                            paths = paths + DrawPath(currentPoints)
+                            paths = paths + DrawPath(
+                                points = currentPoints.map { offset -> Point(offset.x, offset.y) },
+                                color = currentColor.toArgb(),
+                                strokeWidth = currentStrokeWidth
+                            )
                             currentPath = Path()
                             currentPoints = emptyList()
                         }
@@ -94,15 +107,15 @@ fun CanvasDetailScreen(
                     }
                     drawPath(
                         path = path,
-                        color = Color.Black,
-                        style = Stroke(width = 5f, cap = StrokeCap.Round)
+                        color = Color(drawPath.color),
+                        style = Stroke(width = drawPath.strokeWidth, cap = StrokeCap.Round)
                     )
                 }
                 if (currentPoints.isNotEmpty()) {
                     drawPath(
                         path = currentPath,
-                        color = Color.Black,
-                        style = Stroke(width = 5f, cap = StrokeCap.Round)
+                        color = currentColor,
+                        style = Stroke(width = currentStrokeWidth, cap = StrokeCap.Round)
                     )
                 }
             }

@@ -2,6 +2,7 @@ package com.mhss.app.presentation.canvas
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -13,12 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mhss.app.domain.model.Point
 import com.mhss.app.ui.R
 import org.koin.androidx.compose.koinViewModel
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 @Composable
 fun CanvasScreen(
