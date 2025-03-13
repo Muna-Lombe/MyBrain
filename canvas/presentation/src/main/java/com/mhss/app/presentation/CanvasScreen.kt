@@ -4,11 +4,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Brush
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.ColorLens
-import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,8 +14,10 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mhss.app.domain.model.Point
+import com.mhss.app.ui.R
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -48,26 +45,26 @@ fun CanvasScreen(
         ) {
             IconButton(onClick = { showColorPicker = true }) {
                 Icon(
-                    imageVector = Icons.Default.ColorLens,
+                    painter = painterResource(id = R.drawable.color_lens_img),
                     contentDescription = "Pick Color",
                     tint = Color(state.currentColor)
                 )
             }
             IconButton(onClick = { showStrokeWidthPicker = true }) {
                 Icon(
-                    imageVector = Icons.Default.Brush,
+                    painter = painterResource(id = R.drawable.brush_img),
                     contentDescription = "Stroke Width"
                 )
             }
             IconButton(onClick = { viewModel.onEvent(CanvasEvent.ClearCanvas) }) {
                 Icon(
-                    imageVector = Icons.Default.Clear,
+                    painter = painterResource(id = R.drawable.clear_img),
                     contentDescription = "Clear Canvas"
                 )
             }
             IconButton(onClick = { showSaveDialog = true }) {
                 Icon(
-                    imageVector = Icons.Default.Save,
+                    painter = painterResource(id = R.drawable.save_img),
                     contentDescription = "Save Drawing"
                 )
             }
