@@ -5,4 +5,4 @@ import org.koin.core.annotation.Module
 
 @Module
 @ComponentScan("com.mhss.app.presentation")
-class CanvasPresentationModule
+class DiaryPresentationModule

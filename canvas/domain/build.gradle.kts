@@ -11,5 +11,6 @@ dependencies {
 
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
+    implementation(project(":core:database"))
     ksp(libs.koin.ksp.compiler)
 }

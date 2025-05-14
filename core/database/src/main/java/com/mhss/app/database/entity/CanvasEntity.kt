@@ -8,8 +8,17 @@ import com.mhss.app.domain.model.DrawPath
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@Entity(tableName = "canvas_drawings")
+
+@Entity(tableName = "canvas_table")
 data class CanvasEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val title: String,
+    val content: String
+)
+
+@Entity(tableName = "canvas_drawings")
+data class CanvasDrawingEntity(
     @PrimaryKey
     val id: String,
     val title: String,

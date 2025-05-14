@@ -14,6 +14,7 @@ import com.mhss.app.alarm.di.AlarmModule
 import com.mhss.app.ui.R
 import com.mhss.app.data.bookmarksDataModule
 import com.mhss.app.data.calendarDataModule
+import com.mhss.app.data.canvasDataModule
 import com.mhss.app.data.di.aiDataModule
 import com.mhss.app.data.diaryDataModule
 import com.mhss.app.data.noteDataModule
@@ -29,6 +30,7 @@ import com.mhss.app.preferences.di.PreferencesModule
 import com.mhss.app.presentation.di.AiPresentationModule
 import com.mhss.app.presentation.di.BookmarksPresentationModule
 import com.mhss.app.presentation.di.CalendarPresentationModule
+import com.mhss.app.presentation.di.CanvasPresentationModule
 import com.mhss.app.presentation.di.DiaryPresentationModule
 import com.mhss.app.presentation.di.NotePresentationModule
 import com.mhss.app.presentation.di.SettingsPresentationModule
@@ -69,6 +71,8 @@ class MyBrainApplication : Application() {
                 settingsDataModule,
                 CalendarPresentationModule().module,
                 calendarDataModule,
+                CanvasPresentationModule().module,
+                canvasDataModule,
                 BookmarksPresentationModule().module,
                 bookmarksDataModule,
                 WidgetModule().module,
