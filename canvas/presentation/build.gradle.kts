@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":canvas:domain"))
     implementation(project(":ai:domain"))
     implementation(project(":ai:presentation"))
     implementation(project(":core:ui"))

@@ -6,11 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mhss.app.domain.AiConstants
-import com.mhss.app.domain.conciseNotePrompt
-import com.mhss.app.domain.extendNotePrompt
-import com.mhss.app.domain.summarizeNotePrompt
-import com.mhss.app.domain.use_case.GenerateImageUseCase
-import com.mhss.app.domain.use_case.SendAiPromptUseCase
+import com.mhss.app.domain.use_case.ExtendTextUseCase
+import com.mhss.app.domain.use_case.GenerateCanvasImageUseCase
+import com.mhss.app.domain.use_case.MakeConciseUseCase
+import com.mhss.app.domain.use_case.SummarizeTextUseCase
 import com.mhss.app.network.NetworkResult
 import com.mhss.app.preferences.PrefsConstants
 import com.mhss.app.preferences.domain.model.AiProvider
@@ -27,8 +26,10 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class CanvasViewModel(
-    private val sendPrompt: SendAiPromptUseCase,
-    private val generateImageUseCase: GenerateImageUseCase,
+    private val summarizeText: SummarizeTextUseCase,
+    private val extendText: ExtendTextUseCase,
+    private val makeConcise: MakeConciseUseCase,
+    private val generateImageUseCase: GenerateCanvasImageUseCase,
     private val getPreference: GetPreferenceUseCase,
 ) : ViewModel() {
 
@@ -87,18 +88,24 @@ class CanvasViewModel(
         when (event) {
             is CanvasEvent.UpdateText -> text = event.text
             is CanvasEvent.UpdatePrompt -> prompt = event.prompt
-            CanvasEvent.Summarize -> generateText(text.summarizeNotePrompt)
-            CanvasEvent.Extend -> generateText(text.extendNotePrompt)
-            CanvasEvent.MakeConcise -> generateText(text.conciseNotePrompt)
+            CanvasEvent.Summarize -> generateText {
+                summarizeText(text, aiKey, aiModel, aiProvider.value, openaiURL)
+            }
+            CanvasEvent.Extend -> generateText {
+                extendText(text, aiKey, aiModel, aiProvider.value, openaiURL)
+            }
+            CanvasEvent.MakeConcise -> generateText {
+                makeConcise(text, aiKey, aiModel, aiProvider.value, openaiURL)
+            }
             CanvasEvent.GenerateImage -> generateImage()
             CanvasEvent.AiResultHandled -> aiState = aiState.copy(showAiSheet = false)
         }
     }
 
-    private fun generateText(prompt: String) {
+    private fun generateText(block: suspend () -> NetworkResult<String>) {
         viewModelScope.launch {
             aiState = aiState.copy(loading = true, result = null, error = null, showAiSheet = true)
-            when (val result = sendPrompt(prompt, aiKey, aiModel, aiProvider.value, openaiURL)) {
+            when (val result = block()) {
                 is NetworkResult.Success -> aiState = aiState.copy(loading = false, result = result.data)
                 is NetworkResult.Failure -> aiState = aiState.copy(loading = false, error = result)
             }
