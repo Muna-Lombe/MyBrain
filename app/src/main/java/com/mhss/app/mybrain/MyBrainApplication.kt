@@ -14,6 +14,7 @@ import com.mhss.app.alarm.di.AlarmModule
 import com.mhss.app.ui.R
 import com.mhss.app.data.bookmarksDataModule
 import com.mhss.app.data.calendarDataModule
+import com.mhss.app.data.di.canvasDataModule
 import com.mhss.app.data.di.aiDataModule
 import com.mhss.app.data.diaryDataModule
 import com.mhss.app.data.noteDataModule
@@ -33,6 +34,7 @@ import com.mhss.app.presentation.di.DiaryPresentationModule
 import com.mhss.app.presentation.di.NotePresentationModule
 import com.mhss.app.presentation.di.SettingsPresentationModule
 import com.mhss.app.presentation.di.TasksPresentationModule
+import com.mhss.app.presentation.di.CanvasPresentationModule
 import com.mhss.app.util.Constants
 import com.mhss.app.widget.di.WidgetModule
 import org.koin.android.ext.koin.androidContext
@@ -73,7 +75,9 @@ class MyBrainApplication : Application() {
                 bookmarksDataModule,
                 WidgetModule().module,
                 aiDataModule,
-                AiPresentationModule().module
+                AiPresentationModule().module,
+                canvasDataModule,
+                CanvasPresentationModule().module
             )
             workManagerFactory()
         }
