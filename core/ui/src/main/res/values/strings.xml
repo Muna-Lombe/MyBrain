@@ -200,4 +200,6 @@
     <string name="make_concise">Make concise</string>
     <string name="generate_image">Generate image</string>
     <string name="prompt">Prompt</string>
+    <string name="run">Run</string>
+    <string name="input">Input</string>
 </resources>
