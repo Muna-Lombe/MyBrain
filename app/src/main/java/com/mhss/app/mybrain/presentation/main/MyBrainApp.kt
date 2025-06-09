@@ -48,6 +48,7 @@ import com.mhss.app.presentation.DiaryScreen
 import com.mhss.app.presentation.DiarySearchScreen
 import com.mhss.app.presentation.ImportExportScreen
 import com.mhss.app.presentation.integrations.IntegrationsScreen
+import com.mhss.app.presentation.CanvasScreen
 import com.mhss.app.presentation.NoteDetailsScreen
 import com.mhss.app.presentation.NoteFolderDetailsScreen
 import com.mhss.app.presentation.NotesScreen
@@ -321,6 +322,12 @@ fun MyBrainApp(
                         exitTransition = { slideOutTransition() },
                     ) {
                         AssistantScreen()
+                    }
+                    composable<Screen.CanvasScreen>(
+                        enterTransition = { slideInTransition() },
+                        exitTransition = { slideOutTransition() },
+                    ) {
+                        CanvasScreen()
                     }
                 }
                 if (!appUnlocked) {

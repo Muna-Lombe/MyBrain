@@ -4,7 +4,13 @@ import com.mhss.app.data.model.gemini.GeminiResponse
 import com.mhss.app.data.model.gemini.text
 import com.mhss.app.data.model.gemini.toAiMessage
 import com.mhss.app.data.model.gemini.toGeminiRequestBody
+import com.mhss.app.data.model.gemini.GeminiImageRequest
+import com.mhss.app.data.model.gemini.GeminiImageResponse
+import com.mhss.app.data.model.gemini.toAiImage
+import com.mhss.app.data.model.gemini.GeminiMessage
+import com.mhss.app.data.model.gemini.GeminiMessagePart
 import com.mhss.app.domain.model.AiMessage
+import com.mhss.app.domain.model.AiImage
 import com.mhss.app.domain.repository.AiApi
 import com.mhss.app.network.NetworkResult
 import io.ktor.client.HttpClient
@@ -82,6 +88,40 @@ class GeminiApi(
                 }
             } else {
                 NetworkResult.Success(result.toAiMessage())
+            }
+        }
+    }
+
+    override suspend fun generateImage(
+        baseUrl: String,
+        prompt: String,
+        model: String,
+        key: String
+    ): NetworkResult<AiImage> {
+        return withContext(ioDispatcher) {
+            val result = client.post(baseUrl) {
+                url {
+                    appendPathSegments("models")
+                    appendPathSegments("$model:generateContent")
+                    parameters.append("key", key)
+                }
+                contentType(ContentType.Application.Json)
+                setBody(
+                    GeminiImageRequest(
+                        contents = listOf(
+                            GeminiMessage(parts = listOf(GeminiMessagePart(prompt)))
+                        )
+                    )
+                )
+            }.body<GeminiImageResponse>()
+            if (result.error != null) {
+                if (result.error.code in 400..499) {
+                    NetworkResult.OtherError(result.error.message)
+                } else {
+                    NetworkResult.OtherError()
+                }
+            } else {
+                NetworkResult.Success(result.toAiImage())
             }
         }
     }
