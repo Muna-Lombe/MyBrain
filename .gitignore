@@ -26,3 +26,4 @@ local.properties
 /.idea/runConfigurations.xml
 /.idea/gradle.xml
 /.idea/compiler.xml
+android-commandlinetools.zip

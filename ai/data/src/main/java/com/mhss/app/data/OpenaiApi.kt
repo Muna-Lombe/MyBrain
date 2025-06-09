@@ -5,7 +5,11 @@ import com.mhss.app.data.model.openai.OpenaiMessageRequestBody
 import com.mhss.app.data.model.openai.OpenaiResponse
 import com.mhss.app.data.model.openai.toAiMessage
 import com.mhss.app.data.model.openai.toOpenAiRequestBody
+import com.mhss.app.data.model.openai.OpenaiImageRequest
+import com.mhss.app.data.model.openai.OpenaiImageResponse
+import com.mhss.app.data.model.openai.toAiImage
 import com.mhss.app.domain.model.AiMessage
+import com.mhss.app.domain.model.AiImage
 import com.mhss.app.network.NetworkResult
 import com.mhss.app.domain.repository.AiApi
 import io.ktor.client.HttpClient
@@ -84,6 +88,31 @@ class OpenaiApi(
                 }
             } else {
                 NetworkResult.Success(result.choices!!.first().message.toAiMessage())
+            }
+        }
+    }
+
+    override suspend fun generateImage(
+        baseUrl: String,
+        prompt: String,
+        model: String,
+        key: String
+    ): NetworkResult<AiImage> {
+        return withContext(ioDispatcher) {
+            val result = client.post(baseUrl) {
+                url { appendPathSegments("images", "generations") }
+                contentType(ContentType.Application.Json)
+                bearerAuth(key)
+                setBody(OpenaiImageRequest(prompt, model))
+            }.body<OpenaiImageResponse>()
+            if (result.error != null) {
+                if (result.error.message.contains("API key")) {
+                    NetworkResult.InvalidKey
+                } else {
+                    NetworkResult.OtherError(result.error.message)
+                }
+            } else {
+                NetworkResult.Success(result.toAiImage())
             }
         }
     }

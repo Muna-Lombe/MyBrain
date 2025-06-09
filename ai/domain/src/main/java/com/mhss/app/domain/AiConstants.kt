@@ -53,3 +53,21 @@ val String.correctSpellingNotePrompt: String
         $this
         Corrected note:
     """.trimIndent()
+
+val String.extendNotePrompt: String
+    get() = """
+        Extend this text with more detail while keeping the same style and language.
+        Respond with the extended text only and don't say anything else.
+        Text content:
+        $this
+        Extended text:
+    """.trimIndent()
+
+val String.conciseNotePrompt: String
+    get() = """
+        Rewrite this text in a more concise form without losing information.
+        Respond with the concise text only and don't say anything else.
+        Text content:
+        $this
+        Concise text:
+    """.trimIndent()
