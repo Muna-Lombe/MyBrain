@@ -11,6 +11,11 @@ dependencies {
 
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
-    implementation(project(":core:database"))
+    implementation(project(":core:database")){
+        attributes {
+            attribute(org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.attribute, org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.androidJvm)
+        }
+    }
+
     ksp(libs.koin.ksp.compiler)
 }

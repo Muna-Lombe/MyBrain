@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 @Entity(tableName = "canvas_table")
 data class CanvasEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: String,
     val title: String,
     val content: String
 )
@@ -43,8 +43,8 @@ data class CanvasDrawingEntity(
     }
 
     companion object {
-        fun fromDrawing(drawing: CanvasDrawing): CanvasEntity {
-            return CanvasEntity(
+        fun fromDrawing(drawing: CanvasDrawing): CanvasDrawingEntity {
+            return CanvasDrawingEntity(
                 id = drawing.id,
                 title = drawing.title,
                 pathsJson = Json.encodeToString(drawing.paths),
