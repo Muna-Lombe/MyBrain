@@ -82,6 +82,24 @@ fun SpacesScreen(
                     }
                 )
             }
+            item {
+                SpaceCard(
+                    title = stringResource(R.string.canvas),
+                    image = R.drawable.ai_chat_img,
+                    backgroundColor = Color.Transparent,
+                    onClick = {
+                        navController.navigate(Screen.CanvasScreen)
+                    },
+                    contentModifier = Modifier.drawBehind {
+                        drawAiGradientRadials(
+                            background = surfaceVariant
+                                .copy(alpha = 0.1f)
+                                .compositeOver(DarkGray),
+                            backgroundAlpha = 0.5f
+                        )
+                    }
+                )
+            }
         }
     }
 }

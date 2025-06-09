@@ -1,6 +1,7 @@
 package com.mhss.app.domain.repository
 
 import com.mhss.app.domain.model.AiMessage
+import com.mhss.app.domain.model.AiImage
 import com.mhss.app.network.NetworkResult
 
 interface AiApi {
@@ -18,4 +19,11 @@ interface AiApi {
         model: String,
         key: String
     ): NetworkResult<AiMessage>
+
+    suspend fun generateImage(
+        baseUrl: String,
+        prompt: String,
+        model: String,
+        key: String
+    ): NetworkResult<AiImage>
 }
