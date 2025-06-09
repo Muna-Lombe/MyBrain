@@ -33,6 +33,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":canvas:domain"))
+
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
     implementation(libs.koin.android)

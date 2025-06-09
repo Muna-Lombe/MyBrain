@@ -1,5 +1,6 @@
 package com.mhss.app.data
 
+import com.mhss.app.domain.di.CanvasDomainModule
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.dsl.module
@@ -10,5 +11,5 @@ import org.koin.ksp.generated.module
 internal class CanvasDataModule
 
 val canvasDataModule = module {
-    includes(CanvasDataModule().module)
+    includes(CanvasDataModule().module, CanvasDomainModule().module)
 }
