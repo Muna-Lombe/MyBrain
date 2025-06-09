@@ -10,6 +10,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.icons.Icons
 import androidx.compose.material3.icons.filled.Add
@@ -36,11 +38,41 @@ fun CanvasScreen(viewModel: CanvasViewModel = koinViewModel()) {
     val nodes = viewModel.nodes
     val connections = viewModel.connections
 
+    var addMenu by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = { MyBrainAppBar("Canvas") },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.onEvent(CanvasEvent.AddNode(NodeType.AI, AiAction.SUMMARIZE)) }) {
-                Icon(Icons.Default.Add, contentDescription = null)
+            Box {
+                FloatingActionButton(onClick = { addMenu = !addMenu }) {
+                    Icon(Icons.Default.Add, contentDescription = null)
+                }
+                DropdownMenu(expanded = addMenu, onDismissRequest = { addMenu = false }) {
+                    DropdownMenuItem(text = { Text("Text") }, onClick = {
+                        viewModel.onEvent(CanvasEvent.AddNode(NodeType.TEXT))
+                        addMenu = false
+                    })
+                    DropdownMenuItem(text = { Text("AI Summarize") }, onClick = {
+                        viewModel.onEvent(CanvasEvent.AddNode(NodeType.AI, AiAction.SUMMARIZE))
+                        addMenu = false
+                    })
+                    DropdownMenuItem(text = { Text("Mind Map") }, onClick = {
+                        viewModel.onEvent(CanvasEvent.AddNode(NodeType.MINDMAP))
+                        addMenu = false
+                    })
+                    DropdownMenuItem(text = { Text("Drawing") }, onClick = {
+                        viewModel.onEvent(CanvasEvent.AddNode(NodeType.DRAWING))
+                        addMenu = false
+                    })
+                    DropdownMenuItem(text = { Text("Whiteboard") }, onClick = {
+                        viewModel.onEvent(CanvasEvent.AddNode(NodeType.WHITEBOARD))
+                        addMenu = false
+                    })
+                    DropdownMenuItem(text = { Text("Workflow") }, onClick = {
+                        viewModel.onEvent(CanvasEvent.AddNode(NodeType.WORKFLOW))
+                        addMenu = false
+                    })
+                }
             }
         }
     ) { paddingValues ->
@@ -96,6 +128,10 @@ private fun NodeItem(
         when (node.type) {
             NodeType.TEXT -> TextFieldNode(node, onInputChange, onRun)
             NodeType.AI -> AiNode(node, onInputChange, onRun)
+            NodeType.MINDMAP -> MindMapNode(node, onInputChange, onRun)
+            NodeType.DRAWING -> DrawingNode(node, onInputChange, onRun)
+            NodeType.WHITEBOARD -> WhiteboardNode(node, onInputChange, onRun)
+            NodeType.WORKFLOW -> WorkflowNode(node, onInputChange, onRun)
         }
     }
 }
@@ -123,5 +159,65 @@ private fun AiNode(node: com.mhss.app.presentation.model.CanvasNode, onInput: (I
     } else {
         node.imageUrl?.let { Text(it) } ?: Text(node.output)
     }
+    androidx.compose.material3.Button(onClick = onRun) { Text("Run") }
+}
+
+@Composable
+private fun MindMapNode(node: com.mhss.app.presentation.model.CanvasNode, onInput: (Int, String) -> Unit, onRun: () -> Unit) {
+    var value1 by remember { mutableStateOf(node.input1) }
+    var value2 by remember { mutableStateOf(node.input2) }
+    androidx.compose.material3.TextField(
+        value = value1,
+        onValueChange = { value1 = it; onInput(1, it) },
+        label = { Text("Idea 1") }
+    )
+    androidx.compose.material3.TextField(
+        value = value2,
+        onValueChange = { value2 = it; onInput(2, it) },
+        label = { Text("Idea 2") }
+    )
+    Text(node.output)
+    androidx.compose.material3.Button(onClick = onRun) { Text("Run") }
+}
+
+@Composable
+private fun DrawingNode(node: com.mhss.app.presentation.model.CanvasNode, onInput: (Int, String) -> Unit, onRun: () -> Unit) {
+    var value by remember { mutableStateOf(node.input1) }
+    androidx.compose.material3.TextField(
+        value = value,
+        onValueChange = { value = it; onInput(1, it) },
+        label = { Text("Drawing Commands") }
+    )
+    Text(node.output)
+    androidx.compose.material3.Button(onClick = onRun) { Text("Run") }
+}
+
+@Composable
+private fun WhiteboardNode(node: com.mhss.app.presentation.model.CanvasNode, onInput: (Int, String) -> Unit, onRun: () -> Unit) {
+    var value by remember { mutableStateOf(node.input1) }
+    androidx.compose.material3.TextField(
+        value = value,
+        onValueChange = { value = it; onInput(1, it) },
+        label = { Text("Notes") }
+    )
+    Text(node.output)
+    androidx.compose.material3.Button(onClick = onRun) { Text("Run") }
+}
+
+@Composable
+private fun WorkflowNode(node: com.mhss.app.presentation.model.CanvasNode, onInput: (Int, String) -> Unit, onRun: () -> Unit) {
+    var step by remember { mutableStateOf(node.input1) }
+    var next by remember { mutableStateOf(node.input2) }
+    androidx.compose.material3.TextField(
+        value = step,
+        onValueChange = { step = it; onInput(1, it) },
+        label = { Text("Step") }
+    )
+    androidx.compose.material3.TextField(
+        value = next,
+        onValueChange = { next = it; onInput(2, it) },
+        label = { Text("Next") }
+    )
+    Text(node.output)
     androidx.compose.material3.Button(onClick = onRun) { Text("Run") }
 }

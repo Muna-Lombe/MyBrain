@@ -157,6 +157,28 @@ class CanvasViewModel(
                     }
                 }
             }
+            NodeType.MINDMAP -> {
+                val input1 = getInput(node, 1)
+                val input2 = getInput(node, 2)
+                val result = "${input1.trim()} -> ${input2.trim()}"
+                nodes = nodes.map { if (it.id == id) it.copy(output = result) else it }
+            }
+            NodeType.DRAWING -> {
+                val input1 = getInput(node, 1)
+                val result = "Drawing: ${input1.trim()}"
+                nodes = nodes.map { if (it.id == id) it.copy(output = result) else it }
+            }
+            NodeType.WHITEBOARD -> {
+                val input1 = getInput(node, 1)
+                val result = "Whiteboard: ${input1.trim()}"
+                nodes = nodes.map { if (it.id == id) it.copy(output = result) else it }
+            }
+            NodeType.WORKFLOW -> {
+                val input1 = getInput(node, 1)
+                val input2 = getInput(node, 2)
+                val result = "Workflow: ${input1.trim()} -> ${input2.trim()}"
+                nodes = nodes.map { if (it.id == id) it.copy(output = result) else it }
+            }
         }
     }
 

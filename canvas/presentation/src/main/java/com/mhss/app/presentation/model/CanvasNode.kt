@@ -3,7 +3,14 @@ package com.mhss.app.presentation.model
 import androidx.compose.ui.geometry.Offset
 import com.benasher44.uuid.uuid4
 
-enum class NodeType { TEXT, AI }
+enum class NodeType {
+    TEXT,
+    AI,
+    MINDMAP,
+    DRAWING,
+    WHITEBOARD,
+    WORKFLOW
+}
 
 enum class AiAction { SUMMARIZE, EXTEND, CONCISE, GENERATE_IMAGE }
 
