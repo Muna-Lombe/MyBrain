@@ -73,6 +73,7 @@ dependencies {
     implementation(project(":diary:presentation"))
     implementation(project(":settings:presentation"))
     implementation(project(":ai:presentation"))
+    implementation(project(":canvas:presentation"))
 
     implementation(project(":notes:data"))
     implementation(project(":tasks:data"))
@@ -81,6 +82,7 @@ dependencies {
     implementation(project(":calendar:data"))
     implementation(project(":ai:data"))
     implementation(project(":settings:data"))
+    implementation(project(":canvas:data"))
 
     implementation(project(":tasks:domain"))
     implementation(project(":calendar:domain"))
